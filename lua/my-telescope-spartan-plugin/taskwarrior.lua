@@ -41,7 +41,7 @@ M.taskwarrior = function(opts)
                 return {
                     value = parsed_data,
                     display = parsed_data.description .. tostring(parsed_data.id),
-                    ordinal = ( parsed_data.project or "" ) .. parsed_data.description,
+                    ordinal = ( parsed_data.project or "" ) .. ":" .. parsed_data.description.. ":" .. parsed_data.status,
                 }
             end
         }),
@@ -64,44 +64,18 @@ M.taskwarrior = function(opts)
             end)
 
             map({"n", "i"}, "<C-i>", function()
-                actions.close(prompt_bufnr)
-                local selection = action_state.get_selected_entry()
-                -- print(vim.inspect(selection))
-                print("Task ID: ", selection.value.id)
-                vim.cmd("edit term://task " .. selection.value.id)
-                -- vim.api.nvim_put({ selection.display }, "", false, true)
+                require("my-telescope-spartan-plugin.actions").task_info(prompt_bufnr)
             end)
 
             map({"n", "i"}, "<C-e>", function()
-                require("my-telescope-spartan-plugin.actions").a1(prompt_bufnr)
+                require("my-telescope-spartan-plugin.actions").task_edit(prompt_bufnr)
             end)
 
             map({"n", "i"}, "<C-t>", function()
-                actions.close(prompt_bufnr)
-                local selection = action_state.get_selected_entry()
-                -- print(vim.inspect(selection))
-                vim.cmd("tabedit term://zsh")
-                print( vim.fn.expand("%") )
-                -- Wait for a moment to ensure the terminal initializes
-                vim.defer_fn(function()
-                    -- Get the job ID of the terminal
-                    local job_id = vim.b.terminal_job_id
-                    if job_id then
-                        -- Send a command to the terminal
-                        vim.fn.chansend(job_id, "echo 'Hello from Neovim'\n")
-
-                        -- Send another command (example)
-                        vim.fn.chansend(job_id, "ls -la\n")
-
-                        -- The terminal will remain interactive after the commands
-                    else
-                        print("No terminal job found!")
-                    end
-                end, 100) -- Delay of 100ms to allow the terminal to initialize
-                -- vim.api.nvim_put({ selection.display }, "", false, true)
+                require("my-telescope-spartan-plugin.actions").task_terminal(prompt_bufnr)
             end)
 
-            return false -- WARNING: THIS WILL not map default telescope bindings if false
+            return true -- WARNING: THIS WILL not map default telescope bindings if false
         end,
         previewer = previewers.new_buffer_previewer({
             title = "Task Details",
