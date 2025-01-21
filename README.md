@@ -6,7 +6,7 @@
 ## Installation
 
 > [!HINT]
-> Depends on taskwarrior and telescope plugin for neovim
+> Depends on taskwarrior, timewarrior and telescope plugin for neovim
 > I am using `taskwarrior 3.2.0`
 
 
@@ -37,7 +37,7 @@
     }
     -- somewhere after setup, preferrably in config function :
     config = function()
-        -- load 
+        -- load
 
         -- Use with `Telescope my-telescope-spartan-plugin taskwarrior`
         -- OR
@@ -68,7 +68,7 @@ index a56a125..a3e468b 100644
 +        { dir = "~/pers/my-telescope-spartan-plugin" },
      },
  }
- 
+
 @@ -24,12 +26,21 @@ function M.config()
              ["ui-select"] = {
                  require("telescope.themes").get_dropdown(),
@@ -82,13 +82,13 @@ index a56a125..a3e468b 100644
 +            },
          },
      })
- 
+
      require("telescope").load_extension("fzf")
      pcall(require("telescope").load_extension, "ui-select")
      -- require('telescope').load_extension('dap')
 +    require("telescope").load_extension("my-telescope-spartan-plugin")
 +
- 
+
      local builtin = require("telescope.builtin")
      vim.keymap.set("n", "<leader>sf", builtin.find_files, { desc = "TELESCOPE [s]earch pwd [f]iles" })
 @@ -67,6 +78,9 @@ function M.config()
@@ -99,7 +99,7 @@ index a56a125..a3e468b 100644
 +    vim.keymap.set("n", "<leader>sst", "<cmd>Telescope my-telescope-spartan-plugin taskwarrior<cr>", { desc = "Taskwarrior Tasks" })
 +
  end
- 
+
  return M
 ```
 
@@ -108,3 +108,4 @@ index a56a125..a3e468b 100644
 - [ ] start and stop tasks along with time tracking
 - [ ] reports
 - [ ] some other utilities I wrote for logging weekly work and so on...
+- [ ] Configurable action keymaps
