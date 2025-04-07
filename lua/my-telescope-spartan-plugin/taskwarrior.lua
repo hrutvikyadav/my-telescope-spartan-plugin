@@ -134,8 +134,8 @@ M.taskwarrior_init = function(ext_config)
             -- log.debug(parsed_data)
             return {
               value = parsed_data,
-              display = parsed_data.description .. tostring(parsed_data.id),
-              ordinal = (parsed_data.project or "") .. ":" .. parsed_data.description .. ":" .. parsed_data.status,
+              display = parsed_data.description .. " ID: " .. tostring(parsed_data.id),
+              ordinal = (parsed_data.project or "") .. ":" .. parsed_data.description .. ":" .. parsed_data.status .. ( parsed_data.tags and ":" .. table.concat(parsed_data.tags, ":") or "" ),
             }
           end,
         }),
