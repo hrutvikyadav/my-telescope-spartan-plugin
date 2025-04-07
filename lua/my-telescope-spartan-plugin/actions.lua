@@ -12,7 +12,7 @@ mod.task_edit = function(prompt_bufnr)
   actions.close(prompt_bufnr)
   local selection = action_state.get_selected_entry()
 
-  vim.cmd("tabedit term://task edit " .. selection.value.id)
+  vim.cmd("tabedit term://task edit " .. selection.value.uuid)
 end
 
 -- Show task info and KEEP terminal to run further commands
@@ -47,8 +47,8 @@ mod.task_info = function(prompt_bufnr)
   actions.close(prompt_bufnr)
   local selection = action_state.get_selected_entry()
   -- print(vim.inspect(selection))
-  print("Task ID: ", selection.value.id)
-  vim.cmd("edit term://task " .. selection.value.id)
+  print("Task ID: ", selection.value.uuid)
+  vim.cmd("edit term://task " .. selection.value.uuid)
   -- vim.api.nvim_put({ selection.display }, "", false, true)
 end
 
@@ -56,14 +56,14 @@ mod.task_start = function(prompt_bufnr)
     actions.close(prompt_bufnr)
     local selection = action_state.get_selected_entry()
 
-    vim.cmd("edit term://task start " .. selection.value.id .. " && task_refresh.sh")
+    vim.cmd("edit term://task start " .. selection.value.uuid .. " && task_refresh.sh")
 end
 
 mod.task_stop = function(prompt_bufnr)
     actions.close(prompt_bufnr)
     local selection = action_state.get_selected_entry()
 
-    vim.cmd("edit term://task stop " .. selection.value.id .. " && task_refresh.sh")
+    vim.cmd("edit term://task stop " .. selection.value.uuid .. " && task_refresh.sh")
 end
 
 mod.task_annotate = function(prompt_bufnr)
@@ -95,7 +95,7 @@ mod.task_annotate = function(prompt_bufnr)
     vim.defer_fn(function()
       local job_id = vim.b.terminal_job_id
       if job_id then
-        local c1 = "task " .. selection.value.id .. " annotate '" .. annotation .. "'"
+        local c1 = "task " .. selection.value.uuid .. " annotate '" .. annotation .. "'"
 
         vim.fn.chansend(job_id, c1)
 
@@ -145,7 +145,7 @@ mod.task_info_and_worklog_comments = function (prompt_bufnr)
   actions.close(prompt_bufnr)
   local selection = action_state.get_selected_entry()
 
-  vim.cmd("edit term://task " .. selection.value.id .. " && worklog-comments.sh " .. selection.value.id)
+  vim.cmd("edit term://task " .. selection.value.uuid .. " && worklog-comments.sh " .. selection.value.uuid)
   -- vim.cmd("!task " .. selection.value.id .. " export | !jq -r '.annotations[] | .description' | clip.exe")
 end
 
@@ -153,7 +153,7 @@ mod.task_browse = function (prompt_bufnr)
   actions.close(prompt_bufnr)
   local selection = action_state.get_selected_entry()
 
-  vim.cmd("!browse-jira-task.sh " .. selection.value.id)
+  vim.cmd("!browse-jira-task.sh " .. selection.value.uuid)
 end
 
 mod = transform_mod(mod)
