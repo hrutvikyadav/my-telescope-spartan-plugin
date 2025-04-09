@@ -173,11 +173,19 @@ mod.task_send_to_harpoon_one_off = function(prompt_bufnr)
 
   vim.api.nvim_buf_set_lines(buf, 0, 0, false, { selection.value.uuid })
 
-  harpoon:list("one_off"):add()
+  -- set as buffer keymap harpoon:list("one_off"):add()
+  vim.api.nvim_buf_set_keymap(buf, "n", "<leader>a", "", {
+    callback = function()
+      harpoon:list("one_off"):add()
+    end,
+    noremap = true,
+    silent = true,
+    desc = "add to harpoon one off"
+  })
 
   -- Open Harpoon UI
   -- harpoon_ui.toggle_quick_menu()
-  harpoon.ui:toggle_quick_menu(harpoon:list("one_off"))
+  -- harpoon.ui:toggle_quick_menu(harpoon:list("one_off"))
 end
 
 mod = transform_mod(mod)
