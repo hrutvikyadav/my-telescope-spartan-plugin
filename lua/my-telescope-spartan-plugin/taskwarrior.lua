@@ -20,6 +20,7 @@ local default_action_maps = {
   task_annotate = "<C-a>",
   task_browse = "<C-b>",
   tasks_weekly_log = "<C-l>",
+  task_send_to_harpoon = "<C-h>",
 }
 
 M.taskwarrior = function(opts)
@@ -187,6 +188,10 @@ M.taskwarrior_init = function(ext_config)
 
           map({ "n", "i" }, default_action_maps.tasks_weekly_log, function()
             require("my-telescope-spartan-plugin.actions").tasks_weekly_log(prompt_bufnr)
+          end)
+
+          map({ "n", "i" }, default_action_maps.task_send_to_harpoon, function()
+            require("my-telescope-spartan-plugin.actions").task_send_to_harpoon_one_off(prompt_bufnr)
           end)
 
           return true -- WARNING: THIS WILL not map default telescope bindings if false

@@ -156,6 +156,30 @@ mod.task_browse = function (prompt_bufnr)
   vim.cmd("!browse-jira-task.sh " .. selection.value.uuid)
 end
 
+mod.task_send_to_harpoon_one_off = function(prompt_bufnr)
+  actions.close(prompt_bufnr)
+  local selection = action_state.get_selected_entry()
+  local harpoon = require("harpoon")
+
+  -- open scratch buffer in window and insert the selection.value.uuid in the buffer
+
+  local buf = vim.api.nvim_create_buf(false, true)
+
+  vim.api.nvim_set_option_value("bufhidden", "wipe", { buf = buf})
+  vim.api.nvim_set_option_value("filetype", "markdown", { buf = buf})
+
+  vim.cmd("split")
+  vim.api.nvim_win_set_buf(0, buf)
+
+  vim.api.nvim_buf_set_lines(buf, 0, 0, false, { selection.value.uuid })
+
+  harpoon:list("one_off"):add()
+
+  -- Open Harpoon UI
+  -- harpoon_ui.toggle_quick_menu()
+  harpoon.ui:toggle_quick_menu(harpoon:list("one_off"))
+end
+
 mod = transform_mod(mod)
 
 return mod
