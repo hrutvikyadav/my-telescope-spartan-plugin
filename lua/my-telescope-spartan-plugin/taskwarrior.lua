@@ -123,7 +123,7 @@ M.taskwarrior_init = function(ext_config)
     opts = opts or {}
     pickers
       .new(opts, {
-        prompt_title = "tasks",
+        prompt_title = "Project:Description:Status:Tag(s)",
         finder = finders.new_async_job({
           command_generator = function()
             -- return { "docker", "images", "--format", "json" }
