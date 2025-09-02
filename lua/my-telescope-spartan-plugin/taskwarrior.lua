@@ -115,7 +115,7 @@ end
 
 M.taskwarrior_init = function(ext_config)
   -- default_action_maps = ext_config.maps.actions or default_action_maps -- INFO: Disable user config for now
-  vim.print(ext_config)
+  -- vim.print(ext_config)
 
   local f = function(opts)
     opts = opts or {}
