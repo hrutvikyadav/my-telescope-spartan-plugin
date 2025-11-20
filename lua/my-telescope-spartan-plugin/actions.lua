@@ -175,7 +175,7 @@ mod.task_send_to_harpoon_one_off = function(prompt_bufnr)
 
   -- set as buffer keymap harpoon:list("one_off"):add()
   vim.keymap.set("n", "<leader>h", function()
-      harpoon:list("one_off"):add()
+      harpoon:list("one_off"):append(selection.value.uuid)
   end, { desc = "", buffer = buf })
 
   -- Open Harpoon UI
